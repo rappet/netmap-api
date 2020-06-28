@@ -27,3 +27,8 @@ func (mock PtrRepository) GetPtrs() (model.Ptrs, error) {
 
 	return ptrs, nil
 }
+
+func (mock PtrRepository) GetPtr(address string) (model.Ptr, error) {
+	ptr := mock.ptrs[address]
+	return ptr, nil
+}
