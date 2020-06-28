@@ -8,7 +8,7 @@ import (
 
 type FailableHandlerFunc func(http.ResponseWriter, *http.Request) error
 
-func Failable(inner FailableHandlerFunc) http.Handler {
+func Failable(inner FailableHandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		err := inner(writer, request)
 

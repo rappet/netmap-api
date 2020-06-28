@@ -24,3 +24,7 @@ func Json(inner JsonHandlerFunc) FailableHandlerFunc {
 		return nil
 	})
 }
+
+func JsonHttp(inner JsonHandlerFunc) http.HandlerFunc {
+	return Failable(Json(inner))
+}

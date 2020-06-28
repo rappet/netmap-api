@@ -9,12 +9,12 @@ var routes = routing.Routes{
 		"List all PTRs",
 		"GET",
 		"/ptrs",
-		routing.Failable(routing.Json(PtrIndex)),
+		routing.JsonHttp(PtrIndex),
 	},
 	routing.Route{
 		"Get PTR by IP Address",
 			"GET",
 			"/ptrs/{address}",
-		routing.Failable(routing.Json(GetPtr)),
+		routing.JsonHttp(GetPtr),
 	},
 }
