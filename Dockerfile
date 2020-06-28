@@ -1,12 +1,12 @@
 # Container that builds the app
-FROM instrumentisto/dep:alpine AS builder
+FROM golang:alpine AS builder
 
 MAINTAINER Raphael Peters <raphael.r.peters@gmail.com>
 
 WORKDIR $GOPATH/src/git.rappet.de/rappet/netmap-api
 
-COPY Gopkg.lock Gopkg.toml vendor ./
-RUN dep ensure --vendor-only
+COPY go.mod go.sum ./
+RUN go mod download
 
 COPY . ./
 RUN go build -o /netmap-api -v
