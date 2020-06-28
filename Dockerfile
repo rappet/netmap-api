@@ -15,6 +15,7 @@ RUN go build -o /netmap-api -v
 FROM alpine:latest
 COPY --from=builder /netmap-api ./
 
+ENV DB_CONN_STR="postgres://netmap:netmap@db/netmap?sslmode=disable"
 EXPOSE 8080/tcp
 
 ENTRYPOINT ["./netmap-api"]
