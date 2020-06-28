@@ -5,11 +5,11 @@ import (
 	"net/http"
 )
 
-type JsonHandlerFunc func(*http.Request) (interface{}, error)
+type JsonHandlerFunc func(http.ResponseWriter, *http.Request) (interface{}, error)
 
 func Json(inner JsonHandlerFunc) FailableHandlerFunc {
 	return FailableHandlerFunc(func(writer http.ResponseWriter, request *http.Request) error {
-		response, err := inner(request)
+		response, err := inner(writer, request)
 		if err != nil {
 			return err
 		}
