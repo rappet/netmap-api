@@ -9,6 +9,6 @@ var routes = routing.Routes{
 		"List all PTRs",
 		"GET",
 		"/ptrs",
-		PtrIndex,
+		routing.Failable(routing.Json(PtrIndex)),
 	},
 }
