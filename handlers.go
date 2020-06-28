@@ -1,13 +1,24 @@
 package main
 
 import (
+	"git.rappet.de/rappet/netmap-api/repo"
 	"git.rappet.de/rappet/netmap-api/routing"
 	"github.com/gorilla/mux"
+	"log"
 	"net/http"
 )
 
 func PtrIndex(w http.ResponseWriter, r *http.Request) (interface{}, error) {
-	ptrs, err := ptrRepository.GetPtrs()
+	var likeParam string
+	likeParams, ok := r.URL.Query()["like"]
+	if ok && len(likeParams) > 0 {
+		likeParam = likeParams[0]
+	}
+
+	parameters := repo.GetPtrsParameters{Like: likeParam}
+	log.Print(parameters)
+
+	ptrs, err := ptrRepository.GetPtrs(parameters)
 	if err != nil {
 		return nil, err
 	}

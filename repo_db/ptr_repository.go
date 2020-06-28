@@ -3,6 +3,7 @@ package repo_db
 import (
 	"database/sql"
 	"git.rappet.de/rappet/netmap-api/model"
+	"git.rappet.de/rappet/netmap-api/repo"
 )
 
 type PtrRepository struct {
@@ -15,10 +16,10 @@ func NewPtrRepository(db *sql.DB) PtrRepository {
 	}
 }
 
-func (repo PtrRepository) GetPtrs() (model.Ptrs, error) {
-	sqlStatement := "SELECT address, record, timestamp FROM ptrs;"
+func (repo PtrRepository) GetPtrs(parameters repo.GetPtrsParameters) (model.Ptrs, error) {
+	sqlStatement := "SELECT address, record, timestamp FROM ptrs WHERE record ILIKE $1 LIMIT 1000;"
 	ptrs := make(model.Ptrs, 0)
-	rows, err := repo.db.Query(sqlStatement)
+	rows, err := repo.db.Query(sqlStatement, parameters.Like)
 	if err != nil {
 		return nil, err
 	}

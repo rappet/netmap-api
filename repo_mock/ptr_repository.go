@@ -2,6 +2,7 @@ package repo_mock
 
 import (
 	"git.rappet.de/rappet/netmap-api/model"
+	"git.rappet.de/rappet/netmap-api/repo"
 	"time"
 )
 
@@ -19,7 +20,7 @@ func NewPtrRepository() PtrRepository {
 	}
 }
 
-func (mock PtrRepository) GetPtrs() (model.Ptrs, error) {
+func (mock PtrRepository) GetPtrs(parameters repo.GetPtrsParameters) (model.Ptrs, error) {
 	ptrs := make([]model.Ptr, 0)
 	for _, ptr := range mock.ptrs {
 		ptrs = append(ptrs, ptr)
