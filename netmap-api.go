@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	log.Println("starting netmap-api")
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", Index)
