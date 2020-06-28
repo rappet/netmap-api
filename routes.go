@@ -1,36 +1,11 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"net/http"
+	"git.rappet.de/rappet/netmap-api/routing"
 )
 
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc http.HandlerFunc
-}
-
-type Routes []Route
-
-func NewRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	for _, route := range routes {
-		handler := Logger(route.HandlerFunc, route.Name)
-
-		router.
-			Methods(route.Method).
-			Path(route.Pattern).
-			Name(route.Name).
-			Handler(handler)
-	}
-
-	return router
-}
-
-var routes = Routes{
-	Route{
+var routes = routing.Routes{
+	routing.Route{
 		"List all PTRs",
 		"GET",
 		"/ptrs",
