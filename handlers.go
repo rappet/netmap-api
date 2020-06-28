@@ -2,16 +2,23 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
-	"time"
 )
 
 func PtrIndex(w http.ResponseWriter, r *http.Request) {
-	ptrs := Ptrs{
-		Ptr{Address: "10.0.0.1", Record: "host1.example.net", Timestamp: time.Now()},
-		Ptr{Address: "10.0.0.2", Record: "host2.example.net", Timestamp: time.Now()},
-		Ptr{Address: "10.0.0.3", Record: "host3.example.net", Timestamp: time.Now()},
+	ptrs, err := ptrRepository.GetPtrs()
+	if err != nil {
+		log.Println(err)
+		w.Header().Set("Content-Type", "text/plain; charset=UTF-8")
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintln(w, "Server error")
 	}
 
-	json.NewEncoder(w).Encode(ptrs)
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(ptrs); err != nil {
+		log.Fatalln(err)
+	}
 }

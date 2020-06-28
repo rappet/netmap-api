@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+var ptrRepository PtrRepository = NewPtrRepositoryMock()
+
 func main() {
 	log.Println("starting netmap-api")
 
